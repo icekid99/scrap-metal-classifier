@@ -19,7 +19,7 @@ echo "==> Cloning / updating project..."
 if [ -d "/opt/scrap-metal-classifier" ]; then
   cd /opt/scrap-metal-classifier && git pull
 else
-  git clone https://github.com/YOUR_USERNAME/scrap-metal-classifier.git /opt/scrap-metal-classifier
+  git clone https://github.com/icekid99/scrap-metal-classifier.git /opt/scrap-metal-classifier
   cd /opt/scrap-metal-classifier
 fi
 
