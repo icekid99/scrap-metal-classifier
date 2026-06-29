@@ -1,0 +1,23 @@
+# Environment
+.env
+.env.prod
+*.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.venv/
+*.db
+
+# Model weights (large file — upload separately to server)
+backend/best.pt
+
+# Node
+node_modules/
+dist/
+
+# Uploads/processed (runtime data)
+backend/uploads/
+backend/processed/

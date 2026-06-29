@@ -1,0 +1,46 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: scrap_metal_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgresql://postgres:password@postgres:5432/scrap_metal_db
+      JWT_SECRET: change-me-in-production-super-secret-key
+      UPLOAD_FOLDER: uploads
+      PROCESSED_FOLDER: processed
+      MODEL_PATH: best.pt
+      CONFIDENCE_THRESHOLD: "0.5"
+    volumes:
+      - uploads_data:/app/uploads
+      - processed_data:/app/processed
+      - ./backend/best.pt:/app/best.pt
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build: ./frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+
+volumes:
+  postgres_data:
+  uploads_data:
+  processed_data:
